@@ -4,13 +4,13 @@ defmodule LogRotate do
   require Logger
 
   def start(_type, _args) do
-    config = Application.get_env :log_rotate, :config
+    config = Application.get_env :logger, :rotate
     GenServer.start_link(__MODULE__, config, name: Rotater)
     {:ok, self}
   end
 
   def init(config) do
-    state = Enum.info config %{}
+    state = Enum.into config, %{}
     loop state[:check_every]
     {:ok, state}
   end
