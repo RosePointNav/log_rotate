@@ -61,7 +61,7 @@ defmodule LogRotate do
   end
   
   defp dot(filename, n) do
-    "#{filename}.#{n}"
+    "#{filename}.#{n-1}"
   end
 
 end
