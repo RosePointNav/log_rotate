@@ -3,16 +3,24 @@ defmodule LogRotate do
   use GenServer
   require Logger
 
+  @filenames Application.get_env :log_rotate, :filenames, []
+  @check_every Application.get_env :log_rotate, :check_every, 1000
+  @max_log_size Application.get_env :log_rotate, :max_log_size, 1048576
+  @num_backups Application.get_env :log_rotate, :num_backups, 9
+
   def start(_type, _args) do
-    config = Application.get_all_env :log_rotate
+    config = [
+      check_every: @check_every,
+      max_log_size: @max_log_size,
+      num_backups: @num_backups,
+      filenames: @filenames
+    ]
     GenServer.start_link(__MODULE__, config, name: Rotater)
     {:ok, self}
   end
 
   def init(config) do
-    state =
-      Enum.into(config, %{})
-      |> Map.take([:check_every, :max_log_size, :num_backups, :filenames])
+    state = Enum.into config, %{}
     loop state[:check_every]
     {:ok, state}
   end

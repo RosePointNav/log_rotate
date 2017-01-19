@@ -31,6 +31,6 @@ use Mix.Config
 #
 config :log_rotate,
   check_every: 1000,
-  max_log_size: 1048576,
+  max_log_size: 10,
   num_backups: 9,
-  filenames: []
+  filenames: ["system.log"]
