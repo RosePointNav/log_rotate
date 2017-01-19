@@ -29,5 +29,8 @@ use Mix.Config
 #
 #     import_config "#{Mix.env}.exs"
 #
-# config :logger, rotate: [check_every: 1000, max_log_size: 1048576, num_backups: 9, file_name: "system.log"]
-config :logger, rotate: [check_every: 1000, max_log_size: 10, num_backups: 9, file_name: "system.log"]
+config :log_rotate,
+  check_every: 1000,
+  max_log_size: 1048576,
+  num_backups: 9,
+  filenames: []
