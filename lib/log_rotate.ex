@@ -47,7 +47,8 @@ defmodule LogRotate do
   defp rotate(filename, n, max_n) when n < max_n do
     if File.exists?(dot(filename, n)) do
       rotate(filename, n+1, max_n)
-      File.rename dot(filename, n), dot(filename, n+1)
+      #File.rename not available prior to elixir 1.1
+      :file.rename dot(filename, n), dot(filename, n+1)
     end
   end
 
