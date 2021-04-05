@@ -1,10 +1,12 @@
 defmodule LogRotate.Mixfile do
   use Mix.Project
 
+  @version "2.0.0"
+
   def project do
     [app: :log_rotate,
-     version: "0.1.0",
-     elixir: "~> 1.3",
+     version: @version,
+     elixir: "~> 1.11",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
      deps: deps()]
@@ -13,21 +15,15 @@ defmodule LogRotate.Mixfile do
   # Configuration for the OTP application
   #
   # Type "mix help compile.app" for more information
-  def application do
-    [applications: [:logger], mod: {LogRotate, []}]
+  def application do [
+    applications: [:logger],
+    mod: {LogRotate, []}
+    ]
   end
 
-  # Dependencies can be Hex packages:
-  #
-  #   {:mydep, "~> 0.3.0"}
-  #
-  # Or git/path repositories:
-  #
-  #   {:mydep, git: "https://github.com/elixir-lang/mydep.git", tag: "0.1.0"}
-  #
-  # Type "mix help deps" for more examples and options
-  #
-  defp deps do
-    []
+  defp deps do [
+    {:earmark, "~> 1.4.10"},
+    {:ex_doc, "~> 0.23.0"}
+   ]
   end
 end

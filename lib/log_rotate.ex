@@ -16,7 +16,7 @@ defmodule LogRotate do
       filenames: @filenames
     ]
     GenServer.start_link(__MODULE__, config, name: Rotater)
-    {:ok, self}
+    {:ok, self()}
   end
 
   def init(config) do
@@ -38,11 +38,11 @@ defmodule LogRotate do
         if size > state[:max_log_size] do
           rotate filename, 0, state[:num_backups]
         end
-      _ -> nil 
+      _ -> nil
     end
   end
 
-  defp loop(interval), do: Process.send_after(self, :check_log_size, interval)
+  defp loop(interval), do: Process.send_after(self(), :check_log_size, interval)
 
   defp rotate(filename, n, max_n) when n < max_n do
     if File.exists?(dot(filename, n)) do
@@ -59,7 +59,7 @@ defmodule LogRotate do
   defp dot(filename, 0) do
     filename
   end
-  
+
   defp dot(filename, n) do
     "#{filename}.#{n-1}"
   end
